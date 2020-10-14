@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Pegawai;
+use Dotenv\Validator as DotenvValidator;
 use Illuminate\Http\Request;
+use Validator;
 
 class PegawaiController extends Controller
 {
@@ -36,6 +38,14 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'id_pegawai' => 'required',
+            'nama' => 'required',
+            'jenis_kelamin' => 'required'
+        ]);
+        if($validator->fails()){
+            return redirect('pegawai/create')->withErrors($validator)->withInput();
+        }
         $data = new Pegawai();
         $data->create($request->all());
         return redirect()->route('pegawai.index');

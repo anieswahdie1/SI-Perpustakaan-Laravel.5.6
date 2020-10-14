@@ -6,6 +6,17 @@
         <div class="card">
             <div class="card-header"> Input Data Pegawai </div>
             <div class="card-body">
+                <!-- untuk menampilkan list daftar error -->
+                @if (Count($errors) > 0) <!-- hitung jumlah error, jika lebih dari 0 kerjakan berikut -->
+                    <div class="alert alert-danger">
+                        <ul class="list-unstyled">
+                            @foreach ($errors->all() as $pesan) <!-- tampung semua error ke dalam variabel $pesan -->
+                                <li>{{ $pesan }}</li> <!-- list error -->
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <form action="{{ route('pegawai.store') }}" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group">
